@@ -1,8 +1,5 @@
-# Reinforcement Learning vs. LLM Safety in Medical Triage
-
-This repository contains code and data to reproduce all results from:
-
-**"Decision-Theoretic Controllers Outperform Large Language Models and Rule-Based Guardrails for Medical Triage Safety"**
+# Safety Hazard Detection in Medical Triage
+## A Testing and Validation Study of Large Language Models, Guardrails, and Decision-Theoretic Controllers
 
 Sanjay Basu, Sadiq Patel, John Morgan, Rajaie Batniji
 
