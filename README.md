@@ -125,12 +125,6 @@ If you use this code or data, please cite:
   year={2025}
 }
 ```
-
-## Ethics and Privacy
-
-- All real-world data de-identified per HIPAA Safe Harbor method (45 CFR §164.514(b)(2))
-- Study deemed exempt from IRB review (analysis of de-identified data)
-
 ## License
 
 MIT License - see LICENSE file for details
