@@ -126,11 +126,6 @@ If you use this code or data, please cite:
 }
 ```
 
-## Data Availability
-
-All de-identified datasets and analysis code are publicly available at:
-**https://github.com/sanjaybasu/rl-llm-medical-safety**
-
 ## Ethics and Privacy
 
 - All real-world data de-identified per HIPAA Safe Harbor method (45 CFR §164.514(b)(2))
