@@ -9,7 +9,6 @@ Sanjay Basu, Sadiq Patel, John Morgan, Rajaie Batniji
 ```
 rl_llm_safety_github/
 ├── data/                      # All datasets used in the study
-│   ├── physician_created/     # Physician-authored test scenarios
 ├── code/                      # All analysis scripts
 │   ├── detectors/             # Hazard detection models
 │   ├── controllers/           # RL controller training (CQL + AWR)
