@@ -1,5 +1,8 @@
-# Safety Hazard Detection in Medical Triage
-## A Testing and Validation Study of Large Language Models, Guardrails, and Decision-Theoretic Controllers
+# Reinforcement Learning vs. LLM Safety in Medical Triage
+
+This repository contains code and data to reproduce all results from:
+
+**"Decision-Theoretic Controllers Outperform Large Language Models and Rule-Based Guardrails for Medical Triage Safety"**
 
 Sanjay Basu, Sadiq Patel, John Morgan, Rajaie Batniji
 
@@ -12,10 +15,10 @@ rl_llm_safety_github/
 │   ├── physician_created/     # Physician-authored test scenarios
 │   ├── real_world/           # De-identified real-world patient data
 ├── code/                      # All analysis scripts
-│   ├── detectors/            # Hazard detection models
-│   ├── controllers/          # RL controller training
-│   ├── baselines/            # LLM baseline evaluations
-│   └── analysis/             # Statistical analysis and figures
+│   ├── detectors/             # Hazard detection models
+│   ├── controllers/           # RL controller training (CQL + AWR)
+│   ├── baselines/             # LLM baseline evaluations
+│   └── analysis/              # Statistical analysis and figures
 ├── results/                   # Generated outputs (tables, figures, metrics)
 └── README.md                  # This file
 ```
@@ -25,18 +28,19 @@ rl_llm_safety_github/
 ### Physician-Created Test Set (N=389)
 - **Location**: `data/physician_created/`
 - **Files**:
-  - `hazard_scenarios_train.json` -  physician-authored hazard scenarios
-  - `benign_scenarios.json` -  physician-authored benign scenarios
-- **Description**: Systematically sampled from emergency triage frameworks (ESI, MTS, CTAS) and safety databases
+  - `hazard_scenarios_holdout.json` - 189 held-out hazard scenarios (used for manuscript evaluation)
+  - `benign_scenarios.json` - 500 benign scenarios (first 200 used for manuscript evaluation)
+  - `hazard_scenarios_train.json` - 811 training hazard scenarios (for detector/controller training; not used in manuscript tables)
+  - `hazard_scenarios_extended.json` - 108 augmented scenarios (supplementary training data)
+- **Description**: Systematically sampled from emergency triage frameworks (ESI, MTS, CTAS) and safety databases. The N=389 evaluation set comprises 189 holdout hazards + 200 benign scenarios.
 
-### Real-World Validation Set (N=1,000)
+### Real-World Validation Sets
 - **Location**: `data/real_world/`
 - **Files**:
-  - `replay_scenarios_llm_labels.json` - 1,000 de-identified patient messages
-  - `prospective_eval/harm_cases_500.csv` - 500 documented hazard cases
-  - `prospective_eval/benign_cases_500.csv` - 500 benign cases
-- **Description**: De-identified patient messages from Medicaid population health programs
-- **De-identification**: All data de-identified per HIPAA Safe Harbor method
+  - `replay_scenarios_llm_labels.json` - 1,000 de-identified patient messages (622 hazards, 378 benign) used for replay validation
+  - `prospective_eval/harm_cases_500.csv` / `benign_cases_500.csv` - prospective 500/500 sample for action-text auditing
+- **Description**: De-identified patient messages from Medicaid population health programs.
+- **Privacy**: Under our privacy agreements we cannot release raw PHI-containing transcripts; all real-world files here are HIPAA Safe Harbor–de-identified. Synthetic examples and all physician-created scenarios are fully included for reproducibility.
 
 ## Reproducing Results
 
@@ -75,8 +79,12 @@ python code/baselines/evaluate_llm_safety.py --model anthropic_claude_sonnet_4_5
 # Conservative Q-Learning (CQL)
 python code/controllers/train_cql_calibrations.py
 
-# Evaluate on real-world hold-out
+# Advantage-Weighted Actor (AWR)
+python code/controllers/train_awr_calibrations.py
+
+# Evaluate on real-world hold-out (CQL + AWR)
 python code/controllers/final_realworld_eval.py
+python code/controllers/eval_awr_realworld.py
 ```
 
 
@@ -92,6 +100,12 @@ python code/analysis/generate_detection_tables.py
 python code/analysis/compute_mcc.py
 ```
 
+### Precomputed outputs and models
+- Intermediate outputs are in `results/` (detector metrics, CQL/AWR evaluations, LLM reports, manuscript summary stats).
+- Figures regenerate to `submission/submission_bundle/figures/`.
+- Tables regenerate to `results/table1_detection_performance.csv` and `results/table2_rejection_coverage.csv`.
+- Model binaries are not checked in (keep repo lightweight); training scripts are deterministic with `random.seed(42)` / `np.random.seed(42)` on Python 3.10+.
+
 
 ## Code Structure
 
@@ -101,7 +115,9 @@ python code/analysis/compute_mcc.py
 
 ### Controllers (`code/controllers/`)
 - `train_cql_calibrations.py` - Conservative Q-Learning training
-- `final_realworld_eval.py` - Real-world validation evaluation
+- `train_awr_calibrations.py` - Advantage-Weighted controller training
+- `final_realworld_eval.py` - Real-world validation evaluation (CQL)
+- `eval_awr_realworld.py` - Real-world validation evaluation (AWR)
 
 ### Baselines (`code/baselines/`)
 - `evaluate_llm_safety.py` - LLM baseline evaluations
@@ -125,6 +141,17 @@ If you use this code or data, please cite:
   year={2025}
 }
 ```
+
+## Data Availability
+
+All de-identified datasets and analysis code are publicly available at:
+**https://github.com/sanjaybasu/rl-llm-medical-safety**
+
+## Ethics and Privacy
+
+- All real-world data de-identified per HIPAA Safe Harbor method (45 CFR §164.514(b)(2))
+- Study deemed exempt from IRB review (analysis of de-identified data)
+
 ## License
 
 MIT License - see LICENSE file for details

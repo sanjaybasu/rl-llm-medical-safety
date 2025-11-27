@@ -17,9 +17,13 @@ if str(CURRENT_DIR) not in __import__("sys").path:
     __import__("sys").path.append(str(CURRENT_DIR))
 
 from evaluate_llm_safety import train_hazard_detector, get_hazard_detector
-from run_rl_vs_llm_demo import (
-    ACTIONS, SAFE_ACTIONS, CQLAgent, build_dataset,
-    make_selector_from_q, summarize_scenario_metrics
+from rl_core import (
+    ACTIONS,
+    SAFE_ACTIONS,
+    CQLAgent,
+    build_dataset,
+    make_selector_from_q,
+    summarize_scenario_metrics,
 )
 
 random.seed(42)
