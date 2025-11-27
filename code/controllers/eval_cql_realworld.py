@@ -11,14 +11,19 @@ from pathlib import Path
 import numpy as np
 
 CURRENT_DIR = Path(__file__).resolve().parent
-ROOT_DIR = CURRENT_DIR.parent
+ROOT_DIR = CURRENT_DIR.parents[1]  # repo root
 if str(CURRENT_DIR) not in __import__("sys").path:
     __import__("sys").path.append(str(CURRENT_DIR))
 
 from evaluate_llm_safety import train_hazard_detector, get_hazard_detector
-from run_rl_vs_llm_demo import (
-    ACTIONS, SAFE_ACTIONS, CQLAgent, build_dataset,
-    make_selector_from_q, evaluate_agent, summarize_scenario_metrics
+from rl_core import (
+    ACTIONS,
+    SAFE_ACTIONS,
+    CQLAgent,
+    build_dataset,
+    make_selector_from_q,
+    evaluate_agent,
+    summarize_scenario_metrics,
 )
 
 random.seed(42)

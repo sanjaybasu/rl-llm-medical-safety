@@ -15,7 +15,7 @@ import pandas as pd
 from pathlib import Path
 import seaborn as sns
 
-BASE_DIR = Path(__file__).resolve().parents[1]
+BASE_DIR = Path(__file__).resolve().parents[2]
 RESULTS_DIR = BASE_DIR / "results"
 FIGURES_DIR = SUBMISSION_DIR = BASE_DIR / "submission/submission_bundle/figures"
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
@@ -42,12 +42,12 @@ def load_data():
     with open(RESULTS_DIR / "transformer_detector_controller_metrics.json") as f:
         controller = json.load(f)
     
-    # Simplified chatbot metrics (from table generation)
+    # Doctor-persona prompt metrics (Table 2)
     chatbot = {
-        "gpt5_holdout": {"sensitivity": 0.302, "specificity": 0.850, "sens_ci": [0.241, 0.370], "spec_ci": [0.794, 0.893]},
-        "claude_holdout": {"sensitivity": 0.361, "specificity": 0.825, "sens_ci": [0.295, 0.430], "spec_ci": [0.766, 0.871]},
-        "gpt5_replay": {"sensitivity": 0.116, "specificity": 0.857, "sens_ci": [0.093, 0.143], "spec_ci": [0.818, 0.889]},
-        "claude_replay": {"sensitivity": 0.140, "specificity": 0.857, "sens_ci": [0.115, 0.169], "spec_ci": [0.818, 0.889]},
+        "gpt5_holdout": {"sensitivity": 0.402, "specificity": 1.000},
+        "claude_holdout": {"sensitivity": 0.513, "specificity": 0.945},
+        "gpt5_replay": {"sensitivity": 0.071, "specificity": 0.985},
+        "claude_replay": {"sensitivity": 0.110, "specificity": 0.948},
     }
     
     return detector, controller, chatbot
@@ -61,7 +61,7 @@ def figure1_detection_comparison():
     
     # === Holdout Panel ===
     ax = axes[0]
-    systems = ["GPT-5", "Claude 4.5", "Detector", "Detector+CQL"]
+    systems = ["GPT-5 (doctor)", "Claude 4.5 (doctor)", "Detector", "Detector+CQL"]
     
     # Sensitivity
     sens_vals = [
@@ -70,13 +70,6 @@ def figure1_detection_comparison():
         detector["holdout"]["sensitivity"],
         controller["controller_holdout"]["sensitivity"]
     ]
-    sens_cis = [
-        [chatbot["gpt5_holdout"]["sens_ci"][0], chatbot["gpt5_holdout"]["sens_ci"][1] - chatbot["gpt5_holdout"]["sensitivity"]],
-        [chatbot["claude_holdout"]["sens_ci"][0], chatbot["claude_holdout"]["sens_ci"][1] - chatbot["claude_holdout"]["sensitivity"]],
-        [detector["holdout"]["sensitivity_ci"][0], detector["holdout"]["sensitivity_ci"][1] - detector["holdout"]["sensitivity"]],
-        [controller["controller_holdout"]["sensitivity"], controller["controller_holdout"]["sensitivity"]]  # placeholder
-    ]
-    
     spec_vals = [
         chatbot["gpt5_holdout"]["specificity"],
         chatbot["claude_holdout"]["specificity"],
