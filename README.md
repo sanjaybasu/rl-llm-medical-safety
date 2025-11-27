@@ -1,8 +1,5 @@
-# Reinforcement Learning vs. LLM Safety in Medical Triage
+# Safety Hazard Detection in Medical Triage: A Testing and Validation Study of Large Language Models, Guardrails, and Decision-Theoretic Controllers
 
-This repository contains code and data to reproduce all results from:
-
-**"Decision-Theoretic Controllers Outperform Large Language Models and Rule-Based Guardrails for Medical Triage Safety"**
 
 Sanjay Basu, Sadiq Patel, John Morgan, Rajaie Batniji
 
@@ -13,19 +10,16 @@ Sanjay Basu, Sadiq Patel, John Morgan, Rajaie Batniji
 rl_llm_safety_github/
 ├── data/                      # All datasets used in the study
 │   ├── physician_created/     # Physician-authored test scenarios
-│   ├── real_world/           # De-identified real-world patient data
 ├── code/                      # All analysis scripts
 │   ├── detectors/             # Hazard detection models
 │   ├── controllers/           # RL controller training (CQL + AWR)
 │   ├── baselines/             # LLM baseline evaluations
 │   └── analysis/              # Statistical analysis and figures
-├── results/                   # Generated outputs (tables, figures, metrics)
 └── README.md                  # This file
 ```
 
 ## Datasets
 
-### Physician-Created Test Set (N=389)
 - **Location**: `data/physician_created/`
 - **Files**:
   - `hazard_scenarios_holdout.json` - 189 held-out hazard scenarios (used for manuscript evaluation)
@@ -34,13 +28,6 @@ rl_llm_safety_github/
   - `hazard_scenarios_extended.json` - 108 augmented scenarios (supplementary training data)
 - **Description**: Systematically sampled from emergency triage frameworks (ESI, MTS, CTAS) and safety databases. The N=389 evaluation set comprises 189 holdout hazards + 200 benign scenarios.
 
-### Real-World Validation Sets
-- **Location**: `data/real_world/`
-- **Files**:
-  - `replay_scenarios_llm_labels.json` - 1,000 de-identified patient messages (622 hazards, 378 benign) used for replay validation
-  - `prospective_eval/harm_cases_500.csv` / `benign_cases_500.csv` - prospective 500/500 sample for action-text auditing
-- **Description**: De-identified patient messages from Medicaid population health programs.
-- **Privacy**: Under our privacy agreements we cannot release raw PHI-containing transcripts; all real-world files here are HIPAA Safe Harbor–de-identified. Synthetic examples and all physician-created scenarios are fully included for reproducibility.
 
 ## Reproducing Results
 
@@ -141,16 +128,6 @@ If you use this code or data, please cite:
   year={2025}
 }
 ```
-
-## Data Availability
-
-All de-identified datasets and analysis code are publicly available at:
-**https://github.com/sanjaybasu/rl-llm-medical-safety**
-
-## Ethics and Privacy
-
-- All real-world data de-identified per HIPAA Safe Harbor method (45 CFR §164.514(b)(2))
-- Study deemed exempt from IRB review (analysis of de-identified data)
 
 ## License
 
