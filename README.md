@@ -1,139 +1,44 @@
-# Safety Hazard Detection in Medical Triage: A Testing and Validation Study of Large Language Models, Guardrails, and Decision-Theoretic Controllers
+Clean Replication Bundle (Round 2)
+===================================
 
+This bundle contains the PHI-free artifacts and scripts needed to audit or reproduce the round‑2 safety evaluation.
 
-Sanjay Basu, Sadiq Patel, John Morgan, Rajaie Batniji
+Contents
+--------
+- code/
+  - run_round2_local_only.py — trains/evaluates local baselines (guardrail, constellation, XGBoost/LogReg).
+  - run_round2_decision_policy.py — trains the decision-theoretic controller (CQL variants).
+  - run_round2_gpt_generation.py — runs GPT-5.1 (null/safety) and few-shot prompts; expects OPENAI_API_KEY.
+  - run_tinyllama_mps_finetune.py — fine-tunes TinyLlama 1.1B on MPS (Apple Silicon) for the fairness experiment.
+  - generate_repro_predictions.py — merges per-message predictions into long-format tables.
+  - make_figures.py — generates manuscript figures from verified CSVs.
+- results/repro_round2/
+  - architecture_eval_metrics_VERIFIED_final.csv — primary metrics (sens/spec/F1/MCC/AUROC with 95% CIs).
+  - predictions_long_new.csv — per-message predictions/probabilities for all local models and tinyllama.
+  - op_points_local_plus_cql.csv, op_points_all.csv — operating-point sensitivity at fixed specificity.
+  - fairness_demographics_round2.csv — subgroup fairness metrics by sex/race/ethnicity.
+  - hazard_strat_round2.csv — performance stratified by hazard category.
+  - fewshot_subset_summary.csv, fewshot_subset_README.txt — summary of few-shot experiments (subset n=500).
+  - tinyllama_metrics.csv, tinyllama_predictions.csv — TinyLlama fine-tune results.
+- results/llm_responses_round2/
+  - fewshot_subset500.csv — evaluation subset used for few-shot runs (stratified).
+  - gpt5.1_fewshot{0,5,10}_subset500.jsonl + *_metrics.csv — GPT-5.1 outputs/metrics for 0/5/10-shot.
+- requirements.txt — Python deps for the scripts above.
 
+How to reproduce (high level)
+-----------------------------
+1) Install deps: `pip install -r requirements.txt`
+2) Set `OPENAI_API_KEY` (for GPT runs). DeepSeek/TinyLlama runs are local.
+3) Run local models: `python code/run_round2_local_only.py`
+4) Train decision policy: `python code/run_round2_decision_policy.py`
+5) Generate GPT outputs (batching supported): `python code/run_round2_gpt_generation.py`
+6) Merge predictions: `python code/generate_repro_predictions.py`
+7) Create figures/tables: `python code/make_figures.py`
 
-## Repository Contents
+Notes
+-----
+- No PHI is included. Message texts were excluded; only model outputs/metrics are provided.
+- TinyLlama weights are NOT included to keep size manageable; rerun step 4 to regenerate.
+- For full per-message audit, use `predictions_long_new.csv` (local/tinyllama) and the GPT JSONL files.
 
-```
-rl_llm_safety_github/
-├── data/                      # All datasets used in the study
-├── code/                      # All analysis scripts
-│   ├── detectors/             # Hazard detection models
-│   ├── controllers/           # RL controller training (CQL + AWR)
-│   ├── baselines/             # LLM baseline evaluations
-│   └── analysis/              # Statistical analysis and figures
-└── README.md                  # This file
-```
-
-## Datasets
-
-- **Location**: `data/physician_created/`
-- **Files**:
-  - `hazard_scenarios_holdout.json` - 189 held-out hazard scenarios (used for manuscript evaluation)
-  - `benign_scenarios.json` - 500 benign scenarios (first 200 used for manuscript evaluation)
-  - `hazard_scenarios_train.json` - 811 training hazard scenarios (for detector/controller training; not used in manuscript tables)
-  - `hazard_scenarios_extended.json` - 108 augmented scenarios (supplementary training data)
-- **Description**: Systematically sampled from emergency triage frameworks (ESI, MTS, CTAS) and safety databases. The N=389 evaluation set comprises 189 holdout hazards + 200 benign scenarios.
-
-
-## Reproducing Results
-
-### Prerequisites
-```bash
-pip install -r requirements.txt
-```
-
-Required packages:
-- Python ≥3.9
-- numpy, pandas, scikit-learn
-- sentence-transformers (all-MiniLM-L6-v2)
-- openai, anthropic (for LLM baselines)
-- matplotlib, seaborn (for figures)
-
-### Step 1: Train Hazard Detector
-```bash
-python code/detectors/train_calibrated_detector.py
-```
-This trains the Sentence-BERT + logistic regression detector with temperature scaling on 80% of real-world data.
-
-**Output**: Calibrated detector model with T=0.548
-
-### Step 2: Evaluate LLM Baselines
-```bash
-# GPT-5
-python code/baselines/evaluate_llm_safety.py --model openai_gpt_5 --dataset replay
-
-# Claude Sonnet 4.5
-python code/baselines/evaluate_llm_safety.py --model anthropic_claude_sonnet_4_5 --dataset replay
-```
-
-
-### Step 3: Train Controllers
-```bash
-# Conservative Q-Learning (CQL)
-python code/controllers/train_cql_calibrations.py
-
-# Advantage-Weighted Actor (AWR)
-python code/controllers/train_awr_calibrations.py
-
-# Evaluate on real-world hold-out (CQL + AWR)
-python code/controllers/final_realworld_eval.py
-python code/controllers/eval_awr_realworld.py
-```
-
-
-### Step 4: Generate Figures and Tables
-```bash
-python code/analysis/generate_detection_figures.py
-python code/analysis/generate_detection_tables.py
-```
-
-
-### Step 5: Compute Summary Statistics
-```bash
-python code/analysis/compute_mcc.py
-```
-
-### Precomputed outputs and models
-- Intermediate outputs are in `results/` (detector metrics, CQL/AWR evaluations, LLM reports, manuscript summary stats).
-- Figures regenerate to `submission/submission_bundle/figures/`.
-- Tables regenerate to `results/table1_detection_performance.csv` and `results/table2_rejection_coverage.csv`.
-- Model binaries are not checked in (keep repo lightweight); training scripts are deterministic with `random.seed(42)` / `np.random.seed(42)` on Python 3.10+.
-
-
-## Code Structure
-
-### Detectors (`code/detectors/`)
-- `train_calibrated_detector.py` - Train and calibrate hazard detector
-- `hazard_detection.py` - Core detection utilities
-
-### Controllers (`code/controllers/`)
-- `train_cql_calibrations.py` - Conservative Q-Learning training
-- `train_awr_calibrations.py` - Advantage-Weighted controller training
-- `final_realworld_eval.py` - Real-world validation evaluation (CQL)
-- `eval_awr_realworld.py` - Real-world validation evaluation (AWR)
-
-### Baselines (`code/baselines/`)
-- `evaluate_llm_safety.py` - LLM baseline evaluations
-- `llm_openai.py` - OpenAI API wrapper
-- `llm_anthropic.py` - Anthropic API wrapper
-
-### Analysis (`code/analysis/`)
-- `generate_detection_figures.py` - Create all manuscript figures
-- `generate_detection_tables.py` - Create all manuscript tables
-- `compute_mcc.py` - Calculate Matthews Correlation Coefficient
-
-
-## Citation
-
-If you use this code or data, please cite:
-
-```bibtex
-@article{basu2025controllers,
-  title={Decision-Theoretic Controllers Outperform Large Language Models and Rule-Based Guardrails for Medical Triage Safety},
-  author={Basu, Sanjay and Patel, Sadiq and Morgan, John and Batniji, Rajaie},
-  year={2025}
-}
-```
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Contact
-
-For questions or issues:
-- Sanjay Basu: sanjay.basu@waymarkcare.com
-- GitHub Issues: https://github.com/sanjaybasu/rl-llm-medical-safety/issues
+Contact: Please set your own API keys; none are hard-coded in this bundle.
