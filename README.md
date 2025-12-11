@@ -15,7 +15,7 @@ Contents
 How to reproduce (high level)
 -----------------------------
 1) Install deps: `pip install -r requirements.txt`
-2) Set `OPENAI_API_KEY` (for GPT runs). DeepSeek/TinyLlama runs are local.
+2) Set `OPENAI_API_KEY` (for GPT runs). DeepSeek/Llama runs are local.
 3) Run local models: `python code/run_round2_local_only.py`
 4) Train decision policy: `python code/run_round2_decision_policy.py`
 5) Generate GPT outputs (batching supported): `python code/run_round2_gpt_generation.py`
