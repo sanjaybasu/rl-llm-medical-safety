@@ -16,7 +16,7 @@ San Francisco, CA 94110
 Email: sanjay.basu@ucsf.edu
 
 Layout
-- `data/deidentified/`: PHI-free datasets
+- `data/`: PHI-free datasets
 - `results/`:  for all main-text and appendix figures and tables.
 - `scripts/`: utilities to regenerate tables and audit model outputs 
 
