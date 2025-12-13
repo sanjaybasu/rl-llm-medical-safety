@@ -1,0 +1,12 @@
+Characteristic,"Real-World (n=3,000)",Physician (n=200),p_value
+Mean words (SD),18.2 (9.4),34.1 (12.3),<0.001
+Median words (IQR),16 (12–23),32 (25–42),<0.001
+Range,3–87,15–94,
+"Colloquialisms, n (%)","1,410 (47%)",15 (8%),<0.001
+"Abbreviations, n (%)",930 (31%),24 (12%),<0.001
+"Implicit context, n (%)",690 (23%),9 (5%),<0.001
+"Emoticons/emphatic punctuation, n (%)",570 (19%),0 (0%),<0.001
+"Non-standard grammar, n (%)","1,260 (42%)",7 (3%),<0.001
+"Missing temporal information, n (%)","1,140 (38%)",11 (5%),<0.001
+"Flesch-Kincaid grade level, mean (SD)",6.2 (2.8),11.4 (1.9),<0.001
+"Complex medical terms per message, mean (SD)",0.4 (0.8),2.8 (1.4),<0.001
