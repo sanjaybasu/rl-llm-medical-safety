@@ -18,7 +18,7 @@ Email: sanjay.basu@ucsf.edu
 Layout
 - `data/`: PHI-free datasets
 - `results/`:  for all main-text and appendix figures and tables.
-- `scripts/`: utilities to regenerate tables and audit model outputs 
+- `analysis_scripts/`: utilities to regenerate tables and audit model outputs 
 
 What’s included
 - All main-text tables (linguistic characteristics; real-world performance; operating-point analysis).
