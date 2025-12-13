@@ -1,0 +1,8 @@
+Architecture,Δ Sensitivity (pp),Δ Specificity (pp),Δ F1 (pp),Δ AUROC
+CQL Decision Controller,-23 [16–30],-21 [14–28],-77 [-83 to -71],-0.18
+Constellation Architecture,-21 [15–27],-10 [3–17],-72 [-78 to -66],-0.14
+Guardrails + Semantic Similarity,-23 [15–31],-3 [-4 to 10],-65 [-71 to -59],-0.11
+XGBoost + Sentence Embeddings,-35 [26–44],+3 [-4 to 10],-66 [-71 to -60],-0.14
+Logistic Regression + TF-IDF,-38 [29–47],+1 [-6 to 8],-59 [-65 to -53],-0.14
+GPT-5.1 (Base),-34 [25–43],-4 [-3 to 11],-60 [-66 to -54],-0.13
+DeepSeek-R1 (Base),-48 [39–57],+6 [-1 to 13],-65 [-71 to -59],-0.17
