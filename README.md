@@ -1,30 +1,32 @@
 
-# LLM architecture safety evaluation
+# Comparative Evaluation of AI Architectures for Medical Triage Safety: A Real-World Validation Study
+## Authors: Sanjay Basu, MD, PhD¹,²,*; Sadiq Y. Patel, MSW, PhD²,³; Parth Sheth, MSE²,³; Bhairavi Muralidharan, MSE²; Namrata Elamaran, MSE²; Aakriti Kinra, MS²; John Morgan, MD²,⁴; Rajaie Batniji, MD, PhD²,⁵
 
-Contents
---------
-- code/
-  - run_round2_local_only.py — trains/evaluates local baselines (guardrail, constellation, XGBoost/LogReg).
-  - run_round2_decision_policy.py — trains the decision-theoretic controller (CQL variants).
-  - run_round2_gpt_generation.py — runs GPT-5.1 (null/safety) and few-shot prompts; expects OPENAI_API_KEY.
-  - run_tinyllama_mps_finetune.py — fine-tunes TinyLlama 1.1B on MPS (Apple Silicon) for the fairness experiment.
-  - generate_repro_predictions.py — merges per-message predictions into long-format tables.
-  - make_figures.py — generates manuscript figures from verified CSVs.
-- requirements.txt — Python deps for the scripts above.
+Affiliations:
+¹University of California San Francisco, San Francisco, CA, USA
+²Waymark, San Francisco, CA, USA
+³University of Pennsylvania, Philadelphia, PA, USA
+⁴Virginia Commonwealth University, Richmond, VA, USA
+⁵Stanford University, Stanford, CA, USA
 
-How to reproduce (high level)
------------------------------
-1) Install deps: `pip install -r requirements.txt`
-2) Set `OPENAI_API_KEY` (for GPT runs). DeepSeek/Llama runs are local.
-3) Run local models: `python code/run_round2_local_only.py`
-4) Train decision policy: `python code/run_round2_decision_policy.py`
-5) Generate GPT outputs (batching supported): `python code/run_round2_gpt_generation.py`
-6) Merge predictions: `python code/generate_repro_predictions.py`
-7) Create figures/tables: `python code/make_figures.py`
+Correspondence:
+Sanjay Basu, MD, PhD
+1001 Potrero Avenue
+San Francisco, CA 94110
+Email: sanjay.basu@ucsf.edu
 
-Notes
------
-- No PHI is included. Message texts were excluded; only model outputs/metrics are provided.
-- For full per-message audit, use `predictions_long_new.csv` (local/tinyllama) and the GPT JSONL files.
+Layout
+- `data/deidentified/`: PHI-free datasets
+- `results/`:  for all main-text and appendix figures and tables.
+- `scripts/`: utilities to regenerate tables and audit model outputs 
 
-Please set your own API keys; none are hard-coded in this bundle.
+What’s included
+- All main-text tables (linguistic characteristics; real-world performance; operating-point analysis).
+- All appendix tables (physician-set performance; degradation; hazard-category breakdown; demographic stratification).
+- De-identified real-world dataset mirroring hazard labels and action classes without copying any raw text; source message IDs are hashed for linkage without PHI.
+
+What’s intentionally excluded
+- Raw PHI-bearing messages and LLM responses that may risk PHI identification.
+- Model weights and API keys. Use your own credentials to re-run external LLMs if needed.
+- Data-generation scripts for the de-identified set (kept offline to reduce PHI exposure risk).
+
