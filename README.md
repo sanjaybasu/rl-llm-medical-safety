@@ -1,6 +1,6 @@
 
 # Comparative Evaluation of AI Architectures for Medical Triage Safety: A Real-World Validation Study
-## Authors: Sanjay Basu, MD, PhD¹,²,*; Sadiq Y. Patel, MSW, PhD²,³; Parth Sheth, MSE²,³; Bhairavi Muralidharan, MSE²; Namrata Elamaran, MSE²; Aakriti Kinra, MS²; John Morgan, MD²,⁴; Rajaie Batniji, MD, PhD²,⁵
+Authors: Sanjay Basu, MD, PhD¹,²,*; Sadiq Y. Patel, MSW, PhD²,³; Parth Sheth, MSE²,³; Bhairavi Muralidharan, MSE²; Namrata Elamaran, MSE²; Aakriti Kinra, MS²; John Morgan, MD²,⁴; Rajaie Batniji, MD, PhD²,⁵
 
 Affiliations:
 ¹University of California San Francisco, San Francisco, CA, USA
