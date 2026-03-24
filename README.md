@@ -134,11 +134,3 @@ For questions or issues:
 - Sanjay Basu: sanjay.basu@waymarkcare.com
 - GitHub Issues: https://github.com/sanjaybasu/rl-llm-medical-safety/issues
 
-## Changelog
-
-### 2026-03-24 — Revision for JMIR Formative Research
-- Updated title (removed superlative framing per JMIR editorial guidelines)
-- Added full author list
-- Added verified results table; all F1 values corrected (were previously underreported by ~50%)
-- Added IRB exemption details
-- Citation bibtex updated to reflect journal under review
