@@ -103,15 +103,15 @@ If you use this code or data, please cite:
 
 | Architecture | Sensitivity | Specificity | F1 | AUROC |
 |---|---|---|---|---|
-| Decision-theoretic controller (CQL) | 0.727 | 0.728 | 0.306 | 0.791 |
-| Constellation architecture | 0.685 | 0.777 | 0.329 | 0.794 |
-| Rule-based guardrails | 0.600 | 0.854 | 0.372 | 0.784 |
-| XGBoost + sentence embeddings | 0.430 | 0.908 | 0.351 | 0.734 |
-| Logistic regression + TF-IDF | 0.291 | 0.937 | 0.292 | 0.688 |
+| Decision-theoretic controller (CQL) | 0.727 | 0.728 | 0.306 | 0.731 |
+| Constellation architecture | 0.685 | 0.777 | 0.329 | 0.801 |
+| Rule-based guardrails | 0.600 | 0.854 | 0.372 | 0.801 |
+| XGBoost + sentence embeddings | 0.430 | 0.908 | 0.351 | 0.760 |
+| Logistic regression + TF-IDF | 0.394 | 0.882 | 0.291 | 0.716 |
 | DeepSeek-R1 (base) | 0.297 | 0.945 | 0.311 | 0.689 |
 | DeepSeek-R1 (RAG) | 0.327 | 0.943 | 0.334 | 0.704 |
-| GPT-5.1 (base) | 0.400 | 0.901 | 0.320 | 0.716 |
-| GPT-5.1 (RAG) | 0.400 | 0.901 | 0.320 | 0.716 |
+| GPT-5.1 (base; safety-prompted) | 0.400 | 0.901 | 0.320 | 0.651 |
+| GPT-5.1 (RAG) | 0.400 | 0.901 | 0.320 | 0.651 |
 
 Authoritative verified results: `results/repro_round2/architecture_eval_metrics_VERIFIED_final.csv`
 
