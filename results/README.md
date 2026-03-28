@@ -48,32 +48,10 @@ GPT-5.1 few-shot operating point analysis (0-shot, 5-shot, 10-shot) on the
 
 ## Per-message predictions (`predictions/`)
 
-These files contain message IDs and model predictions only; no message text
-is included.
+Per-message prediction files reference real-world patient message IDs and are
+not distributed in this repository. Aggregated metrics above are sufficient
+to reproduce all manuscript tables and figures.
 
-| File | Systems | N rows | Description |
-|:---|:---|:---:|:---|
-| `predictions_long_new.csv` | 6 local + CQL + TinyLlama | 12,000 | Binary predictions and calibrated probabilities |
-| `predictions_actions_local_with_truth.csv` | 4 local classifiers | 8,000 | Action predictions with clinician ground truth |
-| `predictions_actions_llm_with_truth.csv` | GPT-5.1 variants | varies | LLM action predictions with ground truth |
-| `tinyllama_predictions.csv` | TinyLlama (fine-tuned Llama-1.1B) | 2,000 | Predictions on real-world test set |
-| `predictions_deepseek_full2000.csv` | DeepSeek-R1 (7B, Ollama) | 2,000 | Predictions on full 2,000-message test set |
-
-### Schema (`predictions_long_new.csv`)
-
-```
-dataset, system, message_id, true_label, probability
-```
-
-`message_id` values are CUIDs (lexicographic order approximates chronological
-order within the dataset). `true_label`: 1 = hazardous, 0 = benign.
-
-### Schema (`predictions_actions_local_with_truth.csv`)
-
-```
-system, message_id, hazard_pred, predicted_category, action_pred,
-clinician_action_mapped, action_appropriate, action_match, true_action, under, over
-```
-
-Action codes: 1=self-care, 2=monitor, 3=routine appointment, 4=urgent 24-48h,
-5=urgent same-day, 6=urgent 2-4h, 7=ED, 8=call 911, 9=call 911 immediately.
+To replicate per-message predictions from source, point the analysis scripts
+to your local copy of the real-world dataset (available under a data use
+agreement; contact sanjay.basu@waymarkcare.com).

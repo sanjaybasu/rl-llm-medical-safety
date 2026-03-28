@@ -25,6 +25,9 @@ models/
 # LLM response caches (contain real-world text)
 results/llm_responses*/
 
+# Per-message predictions (reference real-world patient IDs)
+results/predictions/
+
 # Outputs
 *.log
 results/repro_full/

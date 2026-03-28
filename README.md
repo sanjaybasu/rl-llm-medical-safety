@@ -22,14 +22,15 @@ IRB: WCG IRB tracking ID 20253751 (determined exempt).
 ├── data/
 │   └── physician_test/   # Physician-created test scenarios (public)
 ├── results/
-│   ├── *.csv             # Aggregated metrics (primary and supplementary tables)
-│   └── predictions/      # Per-message predictions (message ID + label only)
+│   └── *.csv             # Aggregated metrics (primary and supplementary tables)
 └── submission/
     └── revision_v3/      # Final submission documents (markdown)
 ```
 
-Real-world patient messages are not included. They contain de-identified but
-privacy-sensitive text from Medicaid care coordination and are available under a
+Real-world patient messages and per-message prediction files are not included.
+The messages contain de-identified but privacy-sensitive text from Medicaid care
+coordination. Aggregated metrics and physician-created scenarios are sufficient to
+reproduce all manuscript tables and figures. Real-world data is available under a
 data use agreement (contact: sanjay.basu@waymarkcare.com).
 
 ---
@@ -51,7 +52,7 @@ data use agreement (contact: sanjay.basu@waymarkcare.com).
 Action appropriateness (ActionHead, purpose-trained 9-class classifier): **77.7%** (95% CI 75.8–79.5%).
 
 DeepSeek-R1: evaluated as an additional analysis on the complete 2,000-message test set;
-results in `results/predictions/predictions_deepseek_full2000.csv` and `results/action_metrics_all_final.csv`.
+results in `results/action_metrics_all_final.csv`.
 
 Authoritative source: `results/architecture_eval_metrics_VERIFIED_final.csv`
 
@@ -129,10 +130,8 @@ python code/analysis/make_figures.py
 | `results/fairness_demographics_round2.csv` | Performance by demographic subgroup |
 | `results/op_points_local_plus_cql.csv` | Operating point curves (sensitivity vs specificity) |
 | `results/fewshot_subset_summary.csv` | Few-shot GPT-5.1 operating point analysis (500-message subset) |
-| `results/predictions/predictions_long_new.csv` | Per-message binary predictions and calibrated probabilities (6 local models + CQL + TinyLlama) |
-| `results/predictions/predictions_actions_local_with_truth.csv` | Per-message action predictions with ground truth (local classifiers) |
-| `results/predictions/predictions_actions_llm_with_truth.csv` | Per-message action predictions with ground truth (LLM configurations) |
-| `results/predictions/predictions_deepseek_full2000.csv` | DeepSeek-R1 predictions on the full 2,000-message test set |
+
+Per-message prediction files are not distributed (see Data availability below).
 
 ---
 
