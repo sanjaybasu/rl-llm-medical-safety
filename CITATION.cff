@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+type: software
+title: "rl-llm-medical-safety"
+abstract: >
+  Reproducibility code and data for a comparative evaluation of AI architectures
+  for medical triage safety in a real-world Medicaid care coordination setting.
+authors:
+  - family-names: Basu
+    given-names: Sanjay
+    orcid: "https://orcid.org/0000-0002-5814-5173"
+  - family-names: Patel
+    given-names: Sadiq Y.
+  - family-names: Sheth
+    given-names: Parth
+  - family-names: Muralidharan
+    given-names: Bhairavi
+  - family-names: Elamaran
+    given-names: Namrata
+  - family-names: Kinra
+    given-names: Aakriti
+  - family-names: Morgan
+    given-names: John
+  - family-names: Batniji
+    given-names: Rajaie
+repository-code: "https://github.com/sanjaybasu/rl-llm-medical-safety"
+license: MIT
+date-released: "2026-03-28"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Basu
+      given-names: Sanjay
+    - family-names: Patel
+      given-names: Sadiq Y.
+    - family-names: Sheth
+      given-names: Parth
+    - family-names: Muralidharan
+      given-names: Bhairavi
+    - family-names: Elamaran
+      given-names: Namrata
+    - family-names: Kinra
+      given-names: Aakriti
+    - family-names: Morgan
+      given-names: John
+    - family-names: Batniji
+      given-names: Rajaie
+  title: >
+    Comparative evaluation of AI architectures for medical triage safety:
+    a real-world validation study
+  journal: "JMIR Medical Informatics"
+  year: 2026
+  notes: "Under review, ms#94081"

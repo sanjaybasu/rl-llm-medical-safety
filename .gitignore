@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+venv/
+.venv/
+env/
+
+# Data (real-world patient messages not distributed)
+data/real_world/
+data/**/messages*.csv
+data/**/realworld*.json
+
+# Model weights (large files, available on request)
+models/
+*.pkl
+*.pt
+*.bin
+*.safetensors
+
+# LLM response caches (contain real-world text)
+results/llm_responses*/
+
+# Outputs
+*.log
+results/repro_full/
+results/repro_v1/
+results/action_metrics_updated/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment
+.env
+.env.*
