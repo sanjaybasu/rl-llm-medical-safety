@@ -13,7 +13,8 @@ gpt5.1_fewshot5_subset500,500,0.228,0.136,0.636,,,,,500-msg subset
 gpt5.1_fewshot10_subset500,500,0.366,0.242,0.392,,,,,500-msg subset
 CQL_Controller_prob_tuned,2000,0.2365,,,0.067,0.9175,,,direct action-value prediction
 ActionHead_SBERT_LR,2000,0.7765,0.1275,0.096,,,,,direct 9-class prediction
-ActionHead_SBERT,2000,0.7615,,,,,,,,direct 9-class prediction (no under/over breakdown)
+ActionHead_SBERT,2000,0.7615,,,,,,,direct 9-class prediction (no under/over breakdown)
 TinyLlama_MPS,2000,0.696,0.0855,0.2185,,,0.6765,0.717,binary hazard-to-action mapping (hazard→action4; no hazard→action1); tau=0.080
 CQL_Controller_reward,2000,0.6305,0.085,0.2845,,,0.6105,0.652,binary hazard-to-action mapping (hazard→action4; no hazard→action1); tau=0.100
 DeepSeek_subset500,500,0.316,0.152,0.532,,,,,direct prediction (500-msg subset)
+DeepSeek_full2000,2000,0.4145,0.149,0.4365,,,0.393,0.4365,direct prediction (full 2000-msg test set)
