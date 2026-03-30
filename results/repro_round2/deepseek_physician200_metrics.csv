@@ -1,0 +1,2 @@
+dataset,system,n_sample,n_hazard,n_safe,sensitivity,sensitivity_ci_lower,sensitivity_ci_upper,specificity,specificity_ci_lower,specificity_ci_upper,f1,tp,tn,fp,fn
+Physician_Test_200,DeepSeek-R1_safety,200,132,68,0.439394,0.357627,0.524589,0.838235,0.733098,0.907200,0.577114,58,57,11,74

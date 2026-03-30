@@ -32,7 +32,20 @@ results/predictions/
 *.log
 results/repro_full/
 results/repro_v1/
+results/repro_testset/
 results/action_metrics_updated/
+
+# Submission manuscripts (maintained locally in jmir_medinform_submission/)
+submission/
+
+# Figures (maintained locally in jmir_medinform_submission/figures/)
+docs/figures/
+
+# Replication bundle (source files tracked directly under code/ and results/)
+clean_replication/
+
+# Submission bundles
+submission/submission_bundle/
 
 # macOS
 .DS_Store
