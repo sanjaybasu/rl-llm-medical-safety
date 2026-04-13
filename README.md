@@ -24,7 +24,8 @@ IRB: WCG IRB tracking ID 20253751 (determined exempt).
 ├── results/
 │   └── *.csv             # Aggregated metrics (primary and supplementary tables)
 └── submission/
-    └── revision_v3/      # Final submission documents (markdown)
+    ├── revision_v3/            # Prior revision documents (markdown)
+    └── revision_decision_c/    # Decision C revision documents (current)
 ```
 
 Real-world patient messages and per-message prediction files are not included.
@@ -51,10 +52,11 @@ data use agreement (contact: sanjay.basu@waymarkcare.com).
 
 Action appropriateness (ActionHead, purpose-trained 9-class classifier): **77.7%** (95% CI 75.8–79.5%).
 
-DeepSeek-R1: evaluated as an additional analysis on the complete 2,000-message test set;
-results in `results/action_metrics_all_final.csv`.
+DeepSeek-R1: evaluated on the complete 2,000-message test set (sensitivity 0.224; 95% CI 0.163–0.290) and
+re-evaluated on the 43-item physician holdout subset (sensitivity 0.111; 95% CI 0.039–0.281).
+Results in `results/repro_round2/deepseek_physician43_metrics.csv`.
 
-Authoritative source: `results/architecture_eval_metrics_VERIFIED_final.csv`
+Authoritative source: `results/repro_round2/architecture_eval_metrics_VERIFIED_final.csv`
 
 ---
 
@@ -118,18 +120,30 @@ Output: `results/action_metrics_all_final.csv`
 python code/analysis/make_figures.py
 ```
 
+### 7. DeepSeek-R1 on physician holdout (Decision C revision)
+
+Requires Ollama running locally with `deepseek-r1:8b` pulled.
+
+```bash
+ollama pull deepseek-r1:8b
+python code/analysis/run_deepseek_physician_holdout.py
+```
+
+Output: `clean_replication/results/repro_round2/deepseek_physician43_metrics.csv`
+
 ---
 
 ## Key result files
 
 | File | Description |
 |:---|:---|
-| `results/architecture_eval_metrics_VERIFIED_final.csv` | Primary — sensitivity, specificity, F1, MCC, AUROC with bootstrap 95% CIs for all 9 configurations |
-| `results/action_metrics_all_final.csv` | Action appropriateness, under-triage, and over-triage rates for all configurations |
-| `results/hazard_strat_round2.csv` | Sensitivity by hazard category (18 categories) |
-| `results/fairness_demographics_round2.csv` | Performance by demographic subgroup |
-| `results/op_points_local_plus_cql.csv` | Operating point curves (sensitivity vs specificity) |
-| `results/fewshot_subset_summary.csv` | Few-shot GPT-5.1 operating point analysis (500-message subset) |
+| `results/repro_round2/architecture_eval_metrics_VERIFIED_final.csv` | Primary — sensitivity, specificity, F1, MCC, AUROC with bootstrap 95% CIs for all 9 configurations |
+| `results/repro_round2/action_metrics_all_final.csv` | Action appropriateness, under-triage, and over-triage rates for all configurations |
+| `results/repro_round2/hazard_strat_round2.csv` | Sensitivity by hazard category for constellation/guardrails (23 categories) |
+| `results/repro_round2/fairness_demographics_round2.csv` | Performance by demographic subgroup |
+| `results/repro_round2/op_points_local_plus_cql.csv` | Operating point curves (sensitivity vs specificity) |
+| `results/repro_round2/fewshot_subset_summary.csv` | Few-shot GPT-5.1 operating point analysis (500-message subset) |
+| `results/repro_round2/deepseek_physician43_metrics.csv` | DeepSeek-R1 re-evaluated on 43-item physician holdout subset (Decision C revision) |
 
 Per-message prediction files are not distributed (see Data availability below).
 

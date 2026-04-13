@@ -1,0 +1,2 @@
+dataset,system,n_sample,n_hazard,n_safe,sensitivity,sensitivity_ci_lower,sensitivity_ci_upper,specificity,specificity_ci_lower,specificity_ci_upper,f1,mcc,tp,tn,fp,fn
+Physician_Holdout_43,DeepSeek-R1_safety,43,27,16,0.111111,0.03852,0.280582,0.875,0.639767,0.965023,0.1875,-0.020943,3,14,2,24
