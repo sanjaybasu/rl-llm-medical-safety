@@ -19,28 +19,22 @@ IRB: WCG IRB tracking ID 20253751 (determined exempt).
 │   ├── controllers/      # Conservative Q-learning controller
 │   ├── baselines/        # LLM baseline evaluation wrappers
 │   └── analysis/         # End-to-end evaluation scripts and figure generation
-├── data/
-│   └── physician_test/   # Physician-created test scenarios (public)
-├── results/
-│   └── *.csv             # Aggregated metrics (primary and supplementary tables)
-└── submission/
-    ├── revision_v3/            # Prior revision documents (markdown)
-    └── revision_decision_c/    # Decision C revision documents (current)
+└── requirements.txt
 ```
 
-Real-world patient messages and per-message prediction files are not included.
-The messages contain de-identified but privacy-sensitive text from Medicaid care
-coordination. Aggregated metrics and physician-created scenarios are sufficient to
-reproduce all manuscript tables and figures. Real-world data is available under a
-data use agreement (contact: sanjay.basu@waymarkcare.com).
+This repository contains code only. Data and pre-computed results are not distributed.
+Real-world patient messages contain de-identified but privacy-sensitive text from
+Medicaid care coordination and are available under a data use agreement
+(contact: sanjay.basu@waymarkcare.com). Physician-created test scenarios (200 items
+used for training/evaluation) are available on request from the corresponding author.
 
 ---
 
-## Nine configurations evaluated (real-world test set, n=2,000, 8.25% hazard prevalence)
+## Ten configurations evaluated (real-world test set, n=2,000, 8.25% hazard prevalence)
 
 | Configuration | Sensitivity (95% CI) | Specificity (95% CI) | F1 | AUROC | Action acc |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| CQL controller (sensitivity-opt.) | 0.727 (0.655–0.789) | 0.728 (0.707–0.748) | 0.306 | 0.731 | — |
+| CQL controller (sensitivity-opt.) | 0.727 (0.655–0.789) | 0.728 (0.707–0.748) | 0.306 | 0.731 | —† |
 | CQL controller (reward-opt.) | 0.642 (0.568–0.712) | 0.702 (0.681–0.723) | 0.259 | 0.717 | 63.1% |
 | Constellation architecture | 0.685 (0.610–0.751) | 0.777 (0.756–0.795) | 0.328 | 0.801 | 60.9% |
 | Rule-based guardrails | 0.600 (0.527–0.671) | 0.854 (0.837–0.870) | 0.373 | 0.801 | 69.7% |
@@ -49,14 +43,13 @@ data use agreement (contact: sanjay.basu@waymarkcare.com).
 | GPT-5.1 (safety-augmented prompt) | 0.400 (0.328–0.476) | 0.901 (0.887–0.914) | 0.320 | 0.651 | 16.4% |
 | GPT-5.1 (default prompt) | 0.279 (0.216–0.352) | 0.954 (0.944–0.963) | 0.312 | 0.617 | 15.6% |
 | Fine-tuned Llama-1.1B | 0.376 (0.305–0.452) | 0.774 (0.755–0.793) | 0.193 | 0.701 | 69.6% |
+| DeepSeek-R1 (local Ollama, safety prompt) | 0.224 (0.163–0.290) | 0.866 (0.851–0.882) | 0.165 | 0.545‡ | 41.4% |
 
-Action appropriateness (ActionHead, purpose-trained 9-class classifier): **77.7%** (95% CI 75.8–79.5%).
+†Action appropriateness for CQL hazard-detection controller rows reflects the binary hazard-to-action mapping (63.1% for reward-opt.); the dedicated ActionHead action classifier achieves **77.7%** (95% CI 75.8–79.5%).
 
-DeepSeek-R1: evaluated on the complete 2,000-message test set (sensitivity 0.224; 95% CI 0.163–0.290) and
-re-evaluated on the 43-item physician holdout subset (sensitivity 0.111; 95% CI 0.039–0.281).
-Results in `results/repro_round2/deepseek_physician43_metrics.csv`.
+‡DeepSeek-R1 AUROC is a binary (single-threshold) estimate: 0.5 × (sensitivity + specificity); no calibrated probability scores are available, so a full ROC curve cannot be computed.
 
-Authoritative source: `results/repro_round2/architecture_eval_metrics_VERIFIED_final.csv`
+DeepSeek-R1 was also evaluated on a matched n=41 physician holdout (same stratified split as the nine primary configurations; sensitivity reported after re-evaluation — see `code/analysis/run_deepseek_physician_holdout.py`).
 
 ---
 
@@ -120,53 +113,26 @@ Output: `results/action_metrics_all_final.csv`
 python code/analysis/make_figures.py
 ```
 
-### 7. DeepSeek-R1 on physician holdout (Decision C revision)
+### 7. DeepSeek-R1 on matched physician holdout
 
 Requires Ollama running locally with `deepseek-r1:8b` pulled.
 
 ```bash
 ollama pull deepseek-r1:8b
-python code/analysis/run_deepseek_physician_holdout.py
+python code/analysis/run_deepseek_physician_holdout.py \
+    --data-dir /path/to/physician_test \
+    --out-dir results/
 ```
-
-Output: `clean_replication/results/repro_round2/deepseek_physician43_metrics.csv`
-
----
-
-## Key result files
-
-| File | Description |
-|:---|:---|
-| `results/repro_round2/architecture_eval_metrics_VERIFIED_final.csv` | Primary — sensitivity, specificity, F1, MCC, AUROC with bootstrap 95% CIs for all 9 configurations |
-| `results/repro_round2/action_metrics_all_final.csv` | Action appropriateness, under-triage, and over-triage rates for all configurations |
-| `results/repro_round2/hazard_strat_round2.csv` | Sensitivity by hazard category for constellation/guardrails (23 categories) |
-| `results/repro_round2/fairness_demographics_round2.csv` | Performance by demographic subgroup |
-| `results/repro_round2/op_points_local_plus_cql.csv` | Operating point curves (sensitivity vs specificity) |
-| `results/repro_round2/fewshot_subset_summary.csv` | Few-shot GPT-5.1 operating point analysis (500-message subset) |
-| `results/repro_round2/deepseek_physician43_metrics.csv` | DeepSeek-R1 re-evaluated on 43-item physician holdout subset (Decision C revision) |
-
-Per-message prediction files are not distributed (see Data availability below).
 
 ---
 
 ## Data availability
 
-### Included (public)
+Data are not distributed in this repository.
 
-`data/physician_test/` contains physician-created triage scenarios:
-
-| File | Description |
-|:---|:---|
-| `hazard_scenarios_holdout.json` | 189 held-out hazard scenarios used for evaluation |
-| `hazard_scenarios_train.json` | 811 training hazard scenarios (not in manuscript test tables) |
-| `benign_scenarios.json` | 500 benign scenarios (200 used for physician test set) |
-| `scenario_library.csv` | Hazard category taxonomy (18 categories across 5 domains) |
-
-### Not included (restricted)
-
-Real-world patient messages from the Medicaid care coordination program are not
-included due to privacy constraints. They are available to qualified researchers
-under a data use agreement. Contact: sanjay.basu@waymarkcare.com.
+- **Real-world patient messages**: Available under a data use agreement (contact: sanjay.basu@waymarkcare.com).
+- **Physician-created test scenarios**: Available on request from the corresponding author.
+- **Hazard category taxonomy**: See `code/detectors/` for the canonical 23-category `HAZARD_CATEGORIES` list.
 
 ---
 

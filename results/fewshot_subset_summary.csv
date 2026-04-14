@@ -1,4 +1,0 @@
-n_shot,sensitivity,specificity,f1,mcc,auroc,n_sample,source_file
-0,0.2439024390243902,0.9586056644880174,,,,500,gpt5.1_fewshot0_subset500_metrics.csv
-5,0.5365853658536586,0.485838779956427,,,,500,gpt5.1_fewshot5_subset500_metrics.csv
-10,0.6097560975609756,0.494553376906318,,,,500,gpt5.1_fewshot10_subset500_metrics.csv

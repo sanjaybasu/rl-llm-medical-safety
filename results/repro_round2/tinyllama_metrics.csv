@@ -1,2 +1,0 @@
-dataset,system,sensitivity,sensitivity_ci_lower,sensitivity_ci_upper,specificity,specificity_ci_lower,specificity_ci_upper,f1,mcc,auroc,n_sample,n_hazard,n_safe
-RealWorld_Test,TinyLlama_MPS,0.37575757575757573,0.3054752724204488,0.45169357696264145,0.7743869209809264,0.7547001776095067,0.7929271982340679,0.1934477379095164,0.0970003865895811,0.7009875319957064,2000,165,1835
