@@ -4,7 +4,7 @@ Reproducibility package for:
 
 > Basu S, Patel SY, Sheth P, Muralidharan B, Elamaran N, Kinra A, Morgan J, Batniji R.
 > Comparative evaluation of AI architectures for medical triage safety: a real-world
-> validation study. *JMIR Medical Informatics*. 2026 [under review]. ms#94081.
+> validation study. 2026.
 
 IRB: WCG IRB tracking ID 20253751 (determined exempt).
 
@@ -94,10 +94,10 @@ python code/analysis/make_figures.py
 
 ### 7. DeepSeek-R1 on matched physician holdout
 
-Requires Ollama running locally with `deepseek-r1:8b` pulled.
+Requires Ollama running locally with `deepseek-r1:7b` pulled.
 
 ```bash
-ollama pull deepseek-r1:8b
+ollama pull deepseek-r1:7b
 python code/analysis/run_deepseek_physician_holdout.py \
     --data-dir /path/to/physician_test \
     --out-dir results/
@@ -124,9 +124,7 @@ Data are not distributed in this repository.
              Morgan, John and Batniji, Rajaie},
   title   = {Comparative evaluation of {AI} architectures for medical triage safety:
              a real-world validation study},
-  journal = {JMIR Medical Informatics},
-  year    = {2026},
-  note    = {Under review, ms\#94081}
+  year    = {2026}
 }
 ```
 
